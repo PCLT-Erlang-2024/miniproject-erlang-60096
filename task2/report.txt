@@ -1,0 +1,7 @@
+In Task 2, each package has a random size between a given interval
+[MinPackageSize, MaxPackageSize]. Other than that, the system did not
+change, since the logic for loading trucks in an irregular fashion (not fully
+complete) was already given by Task 1 implementation. So when a package exceeds
+the total capacity of the truck, the truck is dispatched not fully loaded and a
+message is sent to the truck process itself to make sure that the given package
+is eventually loaded into some truck (ensuring that the package is not lost).

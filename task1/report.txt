@@ -1,0 +1,25 @@
+In Task 1, I implemented the core product distribution system, where multiple
+conveyor belts feed packages into multiple trucks. My solution achieves the
+required functionality:
+- Each conveyor belt and truck are modeled as independent units by spawning their
+  own processes. There is also a package generator that creates packages, who also
+  runs in its own process;
+- No overbooking of trucks, since before loading a package I check if the total
+  capacity will be exceeded (using PackageSize =< RemainingCapacity);
+- If a package would cause a truck to exceed its capacity, the truck is marked "full"
+  and replaced by resetting its remaining capacity count and a message is sent to the
+  truck process itself to make sure that the given package is loaded into some truck
+  (ensuring that the package is not lost);
+- Normal/expected order of events: I begin by generating packages, which are then
+  fed into the conveyor belts and ultimately loaded into the trucks;
+- Each conveyor belt can send packages to any truck and vice-versa (trucks can receive
+  packages from different conveyor belts). A conveyor belt chooses a random truck from all
+  the available trucks and then sends the package. To know if a truck is available or not,
+  conveyor belts keep track of the status of each truck (by using a boolean flag). The status
+  of a truck is updated when the truck becomes full (sending message truck_full) and when the
+  truck has been replaced (sending message truck_available).
+- If there is no available truck, a conveyor belt will wait until one truck is available. To make
+  sure packages are not lost, its necessary to send a message to the conveyor belt process itself to
+  make sure that the package is considered again (not discarded).
+This design enables concurrency and exploits the event-driven communication to ensure that the
+system is deadlock-free and to guarantee progress (all packages are eventually loaded onto a truck).

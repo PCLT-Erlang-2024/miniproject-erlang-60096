@@ -1,0 +1,8 @@
+In Task 3, I extended the system to account for the fact that trucks are no
+longer replaced instantaneously, introducing a random delay (at most 1 second,
+but can be adjusted by the constant MAX_DELAY_MS) which effectively simulates
+the shipping (and replacement) time of the trucks. By design, the solution
+implemented for Task 1 and 2 already provided support for non-instant trucks -
+the only change necessary was to call the random_delay/0 function. And since no conveyor
+belt is tied to a particular truck (and vice-versa), the conveyor belts will
+only block/stop (temporarily, until some truck is available) when all trucks are full.
