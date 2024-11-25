@@ -12,13 +12,13 @@ loop(TruckId, RemainingCapacity) ->
                 true ->
                     NewCapacity = RemainingCapacity - PackageSize,
                     io:format("Truck ~p loaded package ~p (size: ~p). Remaining capacity: ~p~n", [
-                        TruckId, PackageId, PackageSize, NewCapacity
+                        self(), PackageId, PackageSize, NewCapacity
                     ]),
                     loop(TruckId, NewCapacity);
                 false ->
                     ConveyorPid ! {truck_full, self()},
-                    io:format("Truck ~p is full. Resetting...~n", [TruckId]),
-                    io:format("Truck ~p replaced and is now available.~n", [TruckId]),
+                    io:format("Truck ~p is full. Resetting...~n", [self()]),
+                    io:format("Truck ~p replaced and is now available.~n", [self()]),
                     ConveyorPid ! {truck_available, self()},
                     self() ! {load_package, ConveyorPid, {package, PackageId, PackageSize}},
                     loop(TruckId, 50)

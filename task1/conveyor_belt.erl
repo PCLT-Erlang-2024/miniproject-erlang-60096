@@ -17,17 +17,17 @@ loop(TruckStatus) ->
                         rand:uniform(length(AvailableTrucks)), AvailableTrucks
                     ),
                     RandomTruck ! {load_package, self(), Package},
-                    io:format("Conveyor Belt ~p: Forwarded package ~p to truck ~p~n", [
+                    io:format("Conveyor Belt ~p: Moved package ~p to truck~p~n", [
                         self(), Package, RandomTruck
                     ]),
                     loop(TruckStatus)
             end;
         {truck_full, TruckPid} ->
-            io:format("Conveyor Belt ~p: Truck ~p is full.~n", [self(), TruckPid]),
+            io:format("Conveyor Belt ~p: Truck ~p is full~n", [self(), TruckPid]),
             UpdatedTruckStatus = update_truck_status(TruckStatus, TruckPid, false),
             loop(UpdatedTruckStatus);
         {truck_available, TruckPid} ->
-            io:format("Conveyor Belt ~p: Truck ~p is now available.~n", [self(), TruckPid]),
+            io:format("Conveyor Belt ~p: Truck ~p is now available~n", [self(), TruckPid]),
             UpdatedTruckStatus = update_truck_status(TruckStatus, TruckPid, true),
             loop(UpdatedTruckStatus)
     end.
