@@ -21,7 +21,7 @@ After compiling the program, you can run the following command to start the simu
 In case of Task 1:
 
 ```bash
-factory:start(<NumPackages>, <NumBelts>, <NumTrucks>, <PacakgeSize>, <TruckCapacity>).
+factory:start(<NumPackages>, <NumBelts>, <NumTrucks>, <PackageSize>, <TruckCapacity>).
 ```
 
 Where:
@@ -93,7 +93,7 @@ After the program has finished running, you can clean the compiled files by runn
 make clean
 ```
 
-## Build and Run - Examples:
+## Build and Run - Examples
 
 Here are some examples of how to run the program using the Erlang shell and the Makefile.
 
