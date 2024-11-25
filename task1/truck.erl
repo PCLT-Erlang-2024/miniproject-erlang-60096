@@ -1,11 +1,10 @@
 -module(truck).
--export([start/1, loop/2]).
+-export([start/2, loop/3]).
 
-start(TruckId) ->
-    Capacity = 50,
-    spawn(?MODULE, loop, [TruckId, Capacity]).
+start(TruckId, Capacity) ->
+    spawn(?MODULE, loop, [TruckId, Capacity, Capacity]).
 
-loop(TruckId, RemainingCapacity) ->
+loop(TruckId, RemainingCapacity, OriginalCapacity) ->
     receive
         {load_package, ConveyorPid, {package, PackageId, PackageSize}} ->
             case PackageSize =< RemainingCapacity of
@@ -14,13 +13,13 @@ loop(TruckId, RemainingCapacity) ->
                     io:format("Truck ~p loaded package ~p (size: ~p). Remaining capacity: ~p~n", [
                         self(), PackageId, PackageSize, NewCapacity
                     ]),
-                    loop(TruckId, NewCapacity);
+                    loop(TruckId, NewCapacity, OriginalCapacity);
                 false ->
                     ConveyorPid ! {truck_full, self()},
                     io:format("Truck ~p is full. Resetting...~n", [self()]),
                     io:format("Truck ~p replaced and is now available.~n", [self()]),
                     ConveyorPid ! {truck_available, self()},
                     self() ! {load_package, ConveyorPid, {package, PackageId, PackageSize}},
-                    loop(TruckId, 50)
+                    loop(TruckId, OriginalCapacity, OriginalCapacity)
             end
     end.
