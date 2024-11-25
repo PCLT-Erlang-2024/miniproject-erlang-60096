@@ -17,8 +17,8 @@ loop(TruckStatus) ->
                         rand:uniform(length(AvailableTrucks)), AvailableTrucks
                     ),
                     RandomTruck ! {load_package, self(), Package},
-                    io:format("Conveyor Belt ~p: Moved package ~p to truck~p~n", [
-                        self(), Package, RandomTruck
+                    io:format("Conveyor Belt ~p: Moved package ~p (size: ~p) to truck ~p~n", [
+                        self(), element(2, Package), element(3, Package), RandomTruck
                     ]),
                     loop(TruckStatus)
             end;
