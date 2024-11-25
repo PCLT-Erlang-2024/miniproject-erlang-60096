@@ -135,6 +135,9 @@ make run NUM_PACKAGES=10 NUM_BELTS=2 NUM_TRUCKS=2 MIN_PACKAGE_SIZE=1 MAX_PACKAGE
 
 ---
 
+<details>
+  <summary>Mini-Project Specification (click to expand)</summary>
+
 # miniproject-erlang
 
 # PCLT - Actor-based Concurrency Module
@@ -206,3 +209,5 @@ The goal of this mini-project is to design and implement a concurrent product di
 - Once the truck is replaced, the conveyor belt resumes its operation.
 
 **Note:** Add a small report to the task 3 folder that explains what correctness properties your system has and what achieves them.
+
+</details>
