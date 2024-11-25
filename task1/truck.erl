@@ -18,6 +18,8 @@ loop(TruckId, RemainingCapacity) ->
                     io:format("Truck ~p is full. Resetting...~n", [TruckId]),
                     io:format("Truck ~p replaced.~n", [TruckId]),
                     ConveyorPid ! {truck_replaced},
+                    TruckPid = self(),
+                    TruckPid ! {load_package, ConveyorPid, {package, PackageId, PackageSize}},
                     loop(TruckId, 50)
             end
     end.
