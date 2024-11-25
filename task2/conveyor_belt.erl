@@ -11,6 +11,7 @@ loop(TruckStatus) ->
             case lists:filter(fun({_, Available}) -> Available end, TruckStatus) of
                 [] ->
                     io:format("Conveyor Belt ~p: No available trucks. Waiting...~n", [self()]),
+                    self() ! {new_package, Package},
                     loop(TruckStatus);
                 AvailableTrucks ->
                     {RandomTruck, _} = lists:nth(
